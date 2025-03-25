@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州三只八戒信息技术有限公司 - 小而美的App开发</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.2);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        
+        .logo span {
+            color: #333;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* 英雄区 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)), url('https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            margin-top: 60px;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        /* 关于我们 */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        /* 服务 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* 作品展示 */
+        .portfolio {
+            background-color: white;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 107, 107, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        /* 团队 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            margin-bottom: 5px;
+        }
+        
+        .member-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            background-color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-control:focus {
+            border-color: #ff6b6b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h3 {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ff6b6b;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #ff6b6b;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: #ff6b6b;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 备案信息 */
+        .beian {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff6b6b;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-img, .about-text {
+                flex: none;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                background-color: white;
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding-top: 30px;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .mobile-menu.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .mobile-menu.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero {
+                height: auto;
+                padding: 100px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">三只<span>八戒</span></div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#services">服务</a></li>
+                    <li><a href="#portfolio">作品展示</a></li>
+                    <li><a href="#team">团队</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>小而美的App开发专家</h1>
+                <p>广州三只八戒信息技术有限公司专注于提供高品质、用户友好的移动应用解决方案，为您的业务带来创新体验。</p>
+                <a href="#contact" class="btn">联系我们</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>关于我们</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="公司办公环境">
+                </div>
+                <div class="about-text">
+                    <p>广州三只八戒信息技术有限公司成立于2023年，是一家专注于移动应用开发的技术公司。我们的使命是打造"小而美"的应用产品，为用户带来简洁、高效、美观的使用体验。</p>
+                    <p>我们的团队由一群充满激情的年轻人组成，他们拥有丰富的技术经验和创新思维。我们相信，优秀的产品不仅需要强大的技术支持，更需要对用户需求的深刻理解和对产品细节的极致追求。</p>
+                    <p>虽然我们目前还没有正式上线的应用产品，但我们正在精心打磨多款应用，期待不久的将来与大家见面。同时，我们也提供定制化的应用开发服务，欢迎与我们洽谈合作。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务 -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>我们的服务</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>移动应用开发</h3>
+                    <p>提供iOS和Android平台的应用开发服务，从需求分析到上线运营的全流程支持。我们专注于打造小而美的应用，确保每一个细节都经过精心设计。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX设计</h3>
+                    <p>专业的UI/UX设计团队，为您的应用打造美观且易用的界面，提升用户体验和满意度。我们注重每一个交互细节，让用户使用过程流畅自然。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>技术咨询</h3>
+                    <p>为企业提供移动应用技术咨询服务，帮助您制定合适的技术方案，解决开发过程中遇到的各种技术难题。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>产品运营</h3>
+                    <p>提供应用上线后的运营服务，包括用户数据分析、功能优化、内容更新等，持续提升应用的用户粘性和市场竞争力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品展示 -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2>作品展示</h2>
+            <p class="text-center">以下是我们正在开发中的应用概念设计，敬请期待正式上线。</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="应用展示" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>生活助手</h3>
+                        <p>一款集待办事项、日程管理、笔记于一体的生活效率应用。</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="应用展示" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>财务管理</h3>
+                        <p>简洁直观的个人财务管理工具，帮助用户轻松掌控收支状况。</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="应用展示" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>健康追踪</h3>
+                        <p>专注于个人健康数据记录与分析的应用，提供科学的健康建议。</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="应用展示" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>智能家居</h3>
+                        <p>连接各种智能家居设备的控制中心，让生活更加智能化。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队 -->
+    <section class="team" id="team">
+        <div class="container">
+            <h2>我们的团队</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="团队成员" class="member-img">
+                    <div class="member-info">
+                        <h3>张明</h3>
+                        <p>创始人 & CEO</p>
+                        <div class="social-links">
+                            <a href="#"><span>W</span></a>
+                            <a href="#"><span>Q</span></a>
+                            <a href="#"><span>M</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="团队成员" class="member-img">
+                    <div class="member-info">
+                        <h3>李芳</h3>
+                        <p>产品经理</p>
+                        <div class="social-links">
+                            <a href="#"><span>W</span></a>
+                            <a href="#"><span>Q</span></a>
+                            <a href="#"><span>M</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="团队成员" class="member-img">
+                    <div class="member-info">
+                        <h3>王强</h3>
+                        <p>技术总监</p>
+                        <div class="social-links">
+                            <a href="#"><span>W</span></a>
+                            <a href="#"><span>Q</span></a>
+                            <a href="#"><span>M</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="团队成员" class="member-img">
+                    <div class="member-info">
+                        <h3>赵晓</h3>
+                        <p>UI/UX设计师</p>
+                        <div class="social-links">
+                            <a href="#"><span>W</span></a>
+                            <a href="#"><span>Q</span></a>
+                            <a href="#"><span>M</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>联系我们</h2>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="您的邮箱" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="主题">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="您的留言" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">发送留言</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">三只<span>八戒</span></div>
+                    <p>广州三只八戒信息技术有限公司致力于打造小而美的应用体验，为用户提供简洁、高效、美观的移动应用解决方案。</p>
+                </div>
+                <div class="footer-links">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#services">服务</a></li>
+                        <li><a href="#portfolio">作品展示</a></li>
+                        <li><a href="#team">团队</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>联系方式</h3>
+                    <p><span class="contact-icon">📍</span> 广州市天河区某某路123号某某大厦5楼</p>
+                    <p><span class="contact-icon">📱</span> 020-12345678</p>
+                    <p><span class="contact-icon">✉️</span> contact@szbj.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 广州三只八戒信息技术有限公司 版权所有
+            </div>
+            <div class="beian">
+                粤ICP备XXXXXXXX号 | 粤公网安备XXXXXXXXXXXXXX号
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top">↑</div>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (navLinks.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 回到顶部按钮
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 表单提交处理
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 模拟表单提交
+            const formData = new FormData(contactForm);
+            
+            // 显示提交成功信息
+            contactForm.innerHTML = '<div style="text-align: center; padding: 50px 0;"><h3 style="margin-bottom: 20px; color: #ff6b6b;">留言已成功提交！</h3><p>感谢您的关注，我们会尽快回复您。</p></div>';
+        });
+        
+        // 元素进入视口时的动画效果
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        // 添加动画类和观察元素
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('fade');
+            observer.observe(section);
+        });
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            .fade {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            
+            .fade.animate {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
