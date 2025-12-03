@@ -1,247 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - 青蛙目标</title>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>隐私政策 - 青蛙目标</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #27ae60;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        h2 {
-            color: #27ae60;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        h3 {
-            color: #34495e;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        ul, ol {
-            margin-bottom: 15px;
-            padding-left: 30px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .effective-date {
-            font-style: italic;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-        .contact {
-            background-color: #ecf0f1;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 30px;
-        }
-        strong {
-            color: #2c3e50;
-        }
-        .highlight {
-            background-color: #fff9e6;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 20px 0;
-        }
+      :root {
+        color-scheme: light dark;
+        --bg-color: #f5f5f5;
+        --container-bg: #ffffff;
+        --text-color: #333333;
+        --heading-color: #2c3e50;
+        --subheading-color: #27ae60;
+        --h3-color: #34495e;
+        --muted-color: #7f8c8d;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --border-color: #dddddd;
+        --contact-bg: #ecf0f1;
+        --highlight-bg: #fff9e6;
+        --highlight-border: #27ae60;
+      }
+
+      body.darkmode {
+        --bg-color: #121212;
+        --container-bg: #1e1e1e;
+        --text-color: #e0e0e0;
+        --heading-color: #e0f2f1;
+        --subheading-color: #81c784;
+        --h3-color: #cfd8dc;
+        --muted-color: #b0bec5;
+        --shadow-color: rgba(0, 0, 0, 0.6);
+        --border-color: #424242;
+        --contact-bg: #263238;
+        --highlight-bg: #33301f;
+        --highlight-border: #81c784;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg-color);
+      }
+      .container {
+        background-color: var(--container-bg);
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+      h1 {
+        color: var(--heading-color);
+        border-bottom: 3px solid var(--subheading-color);
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+      }
+      h2 {
+        color: var(--subheading-color);
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+      h3 {
+        color: var(--h3-color);
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      p {
+        margin-bottom: 15px;
+        text-align: justify;
+      }
+      ul,
+      ol {
+        margin-bottom: 15px;
+        padding-left: 30px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      .effective-date {
+        font-style: italic;
+        color: var(--muted-color);
+        margin-bottom: 30px;
+      }
+      .contact {
+        background-color: var(--contact-bg);
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 30px;
+      }
+      strong {
+        color: var(--heading-color);
+      }
+      .highlight {
+        background-color: var(--highlight-bg);
+        padding: 15px;
+        border-left: 4px solid var(--highlight-border);
+        margin: 20px 0;
+      }
     </style>
-</head>
-<body>
+    <script>
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var dark = params.get("darkmode");
+          if (dark && dark.toLowerCase() === "true") {
+            document.addEventListener("DOMContentLoaded", function () {
+              document.body.classList.add("darkmode");
+            });
+          }
+        } catch (e) {
+          // ignore
+        }
+      })();
+    </script>
+  </head>
+  <body>
     <div class="container">
-        <h1>Privacy Policy</h1>
-        <p class="effective-date"><strong>Effective Date:</strong> November 4, 2025</p>
+      <h1>隐私政策</h1>
+      <p class="effective-date">
+        <strong>生效日期：</strong>2025 年 11 月 4 日
+      </p>
 
-        <div class="highlight">
-            <p><strong>青蛙目标</strong> is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our application.</p>
-        </div>
-
-        <h2>1. Information We Collect</h2>
-        
-        <h3>1.1 Information You Provide</h3>
-        <p>We collect information that you voluntarily provide to us when using 青蛙目标:</p>
-        <ul>
-            <li><strong>Account Information:</strong> Email address, username, and password (if you choose to create an account)</li>
-            <li><strong>User Content:</strong> Goals, notes, tasks, check items, tags, and other content you create within the app</li>
-            <li><strong>Team Information:</strong> Team space names, member information, and shared content (if you use collaboration features)</li>
-        </ul>
-
-        <h3>1.2 Automatically Collected Information</h3>
-        <ul>
-            <li><strong>Device Information:</strong> Device type, operating system version, and unique device identifiers</li>
-            <li><strong>Usage Data:</strong> App features used, interaction patterns, and crash reports for improving app performance</li>
-            <li><strong>Local Storage:</strong> App settings, preferences, and cached data stored locally on your device</li>
-        </ul>
-
-        <h2>2. How We Use Your Information</h2>
-        
-        <p>We use the collected information for the following purposes:</p>
-        <ul>
-            <li><strong>Service Delivery:</strong> To provide, maintain, and improve 青蛙目标's features and functionality</li>
-            <li><strong>Data Synchronization:</strong> To sync your goals, notes, and content across your devices</li>
-            <li><strong>Collaboration:</strong> To enable team features and shared spaces when you choose to collaborate</li>
-            <li><strong>Security:</strong> To protect your data with encryption and secure authentication</li>
-            <li><strong>Communication:</strong> To send you important updates, notifications, and service-related messages</li>
-            <li><strong>Analytics:</strong> To understand usage patterns and improve app performance (anonymized data only)</li>
-        </ul>
-
-        <h2>3. Data Storage and Security</h2>
-        
-        <h3>3.1 Local-First Approach</h3>
-        <p>青蛙目标 is designed with a <strong>local-first architecture</strong>:</p>
-        <ul>
-            <li>All your data is primarily stored locally on your device</li>
-            <li>The app works fully offline without requiring internet connectivity</li>
-            <li>You maintain complete control over your data</li>
-        </ul>
-
-        <h3>3.2 Data Encryption</h3>
-        <ul>
-            <li><strong>At Rest:</strong> Your data is encrypted when stored on your device</li>
-            <li><strong>In Transit:</strong> All data transmitted between your device and our servers uses industry-standard encryption (TLS/SSL)</li>
-            <li><strong>Cloud Sync:</strong> If you enable cloud synchronization, your data is encrypted before being uploaded to our servers</li>
-        </ul>
-
-        <h3>3.3 Security Measures</h3>
-        <p>We implement robust security measures to protect your information:</p>
-        <ul>
-            <li>Secure authentication and password hashing</li>
-            <li>Regular security audits and updates</li>
-            <li>Access controls and monitoring systems</li>
-            <li>Compliance with industry best practices</li>
-        </ul>
-
-        <h2>4. Data Sharing and Disclosure</h2>
-        
-        <p><strong>We do not sell your personal information to third parties.</strong></p>
-        
-        <h3>4.1 When We May Share Information</h3>
-        <ul>
-            <li><strong>Team Collaboration:</strong> Content you choose to share in team spaces is accessible to team members</li>
-            <li><strong>Service Providers:</strong> We may use trusted third-party services for cloud storage, analytics, and app infrastructure (all bound by strict confidentiality agreements)</li>
-            <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights, safety, or property</li>
-            <li><strong>Business Transfers:</strong> In the event of a merger or acquisition, your data may be transferred (you will be notified in advance)</li>
-        </ul>
-
-        <h2>5. Your Rights and Choices</h2>
-        
-        <p>You have the following rights regarding your data:</p>
-        <ul>
-            <li><strong>Access:</strong> You can access all your data within the app at any time</li>
-            <li><strong>Export:</strong> You can export your data in standard formats</li>
-            <li><strong>Deletion:</strong> You can delete your account and all associated data</li>
-            <li><strong>Correction:</strong> You can edit or update your information at any time</li>
-            <li><strong>Opt-Out:</strong> You can disable cloud sync and use the app completely offline</li>
-            <li><strong>Data Portability:</strong> You can request a copy of your data in a machine-readable format</li>
-        </ul>
-
-        <h2>6. Third-Party Services</h2>
-        
-        <p>青蛙目标 may integrate with third-party services. We may use:</p>
-        <ul>
-            <li><strong>Cloud Storage Providers:</strong> For optional data synchronization (e.g., iCloud, CloudKit)</li>
-            <li><strong>Analytics Services:</strong> For understanding app usage and improving performance (anonymized data only)</li>
-            <li><strong>Crash Reporting:</strong> To identify and fix bugs (no personal information included)</li>
-        </ul>
-        <p>These third-party services have their own privacy policies, and we encourage you to review them.</p>
-
-        <h2>7. Children's Privacy</h2>
-        
-        <p>青蛙目标 is suitable for users of all ages. We do not knowingly collect personal information from children under 13 without parental consent. If you believe we have inadvertently collected such information, please contact us immediately, and we will take steps to delete it.</p>
-
-        <h2>8. International Data Transfers</h2>
-        
-        <p>Your data may be processed and stored in different countries. We ensure that appropriate safeguards are in place to protect your data in compliance with applicable data protection laws, including GDPR and CCPA.</p>
-
-        <h2>9. Data Retention</h2>
-        
-        <ul>
-            <li><strong>Active Accounts:</strong> We retain your data as long as your account is active</li>
-            <li><strong>Deleted Accounts:</strong> When you delete your account, we permanently delete your data within 30 days</li>
-            <li><strong>Backup Data:</strong> Backup copies may be retained for up to 90 days for disaster recovery purposes</li>
-            <li><strong>Legal Obligations:</strong> Some data may be retained longer if required by law</li>
-        </ul>
-
-        <h2>10. Cookies and Tracking</h2>
-        
-        <p>青蛙目标 is a native application and does not use cookies. However, we may use:</p>
-        <ul>
-            <li><strong>Local Storage:</strong> To save your preferences and app settings</li>
-            <li><strong>Analytics Identifiers:</strong> To track app usage patterns (anonymized)</li>
-            <li><strong>Session Tokens:</strong> To maintain your login session securely</li>
-        </ul>
-
-        <h2>11. Changes to This Privacy Policy</h2>
-        
-        <p>We may update this Privacy Policy from time to time. When we make changes:</p>
-        <ul>
-            <li>We will update the "Effective Date" at the top of this policy</li>
-            <li>We will notify you through the app or via email for significant changes</li>
-            <li>Your continued use of 青蛙目标 after changes constitutes acceptance of the updated policy</li>
-        </ul>
-
-        <h2>12. Your California Privacy Rights (CCPA)</h2>
-        
-        <p>If you are a California resident, you have additional rights:</p>
-        <ul>
-            <li>Right to know what personal information is collected</li>
-            <li>Right to delete personal information</li>
-            <li>Right to opt-out of the sale of personal information (we do not sell your data)</li>
-            <li>Right to non-discrimination for exercising your privacy rights</li>
-        </ul>
-
-        <h2>13. European Privacy Rights (GDPR)</h2>
-        
-        <p>If you are in the European Economic Area (EEA), you have rights under GDPR:</p>
-        <ul>
-            <li>Right of access to your personal data</li>
-            <li>Right to rectification of inaccurate data</li>
-            <li>Right to erasure ("right to be forgotten")</li>
-            <li>Right to restrict processing</li>
-            <li>Right to data portability</li>
-            <li>Right to object to processing</li>
-            <li>Rights related to automated decision-making</li>
-        </ul>
-
-        <div class="contact">
-            <h2>14. Contact Us</h2>
-            <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your data, please contact us:</p>
-            <ul>
-                <li><strong>App Name:</strong> 青蛙目标</li>
-                <li><strong>Email:</strong> support@33344.top</li>
-                <li><strong>Response Time:</strong> We aim to respond to all inquiries within 48 hours</li>
-            </ul>
-            <p>For data protection inquiries or to exercise your privacy rights, please include "Privacy Request" in your email subject line.</p>
-        </div>
-
-        <hr style="margin: 40px 0; border: none; border-top: 1px solid #ddd;">
-        
-        <p style="text-align: center; color: #7f8c8d; font-size: 0.9em;">
-            Thank you for trusting 青蛙目标 with your goals and notes. Your privacy is our priority. 🐸
+      <div class="highlight">
+        <p>
+          <strong>青蛙目标</strong>
+          非常重视您的隐私保护。本隐私政策将向您说明在您使用本应用时，我们如何收集、使用和保护您的信息。
         </p>
-    </div>
-</body>
-</html>
+      </div>
 
+      <h2>1. 我们收集的信息</h2>
+
+      <h3>1.1 您主动提供的信息</h3>
+      <p>在您使用青蛙目标的过程中，我们可能会收集您主动提供的以下信息：</p>
+      <ul>
+        <li>
+          <strong>账户信息：</strong>
+          邮箱地址、用户名以及密码（如果您选择创建账户）
+        </li>
+        <li>
+          <strong>用户内容：</strong>
+          您在应用中创建的目标、笔记、任务、勾选项、标签及其他内容
+        </li>
+        <li>
+          <strong>团队信息：</strong>
+          团队空间名称、成员信息以及您在团队协作中共享的内容（如您开启协作功能）
+        </li>
+      </ul>
+
+      <h3>1.2 我们自动收集的信息</h3>
+      <ul>
+        <li>
+          <strong>设备信息：</strong> 设备类型、操作系统版本以及设备唯一标识符
+        </li>
+        <li>
+          <strong>使用数据：</strong>
+          您在应用中使用的功能、交互行为以及用于改进性能的崩溃报告
+        </li>
+        <li>
+          <strong>本地存储信息：</strong>
+          保存在您设备本地的应用设置、偏好及缓存数据
+        </li>
+      </ul>
+
+      <h2>2. 我们如何使用您的信息</h2>
+
+      <p>我们会将收集到的信息用于以下用途：</p>
+      <ul>
+        <li>
+          <strong>服务提供：</strong>
+          为您提供、维护和改进青蛙目标的各项功能和服务
+        </li>
+        <li>
+          <strong>数据同步：</strong> 在多设备之间同步您的目标、笔记和其他内容
+        </li>
+        <li>
+          <strong>协作功能：</strong>
+          在您选择使用团队或共享空间时，支持团队协作与共享
+        </li>
+        <li>
+          <strong>安全保障：</strong> 通过加密和安全认证机制保护您的数据安全
+        </li>
+        <li>
+          <strong>沟通与通知：</strong>
+          向您发送重要的更新、通知及与服务相关的信息
+        </li>
+        <li>
+          <strong>统计与分析：</strong>
+          以匿名方式统计使用情况，用于改进产品体验和性能
+        </li>
+      </ul>
+
+      <h2>3. 数据存储与安全</h2>
+
+      <h3>3.1 本地优先架构</h3>
+      <p>青蛙目标采用 <strong>本地优先架构</strong> 设计：</p>
+      <ul>
+        <li>您的数据主要存储在您的本地设备上</li>
+        <li>应用在无网络环境下也可完整使用，无需持续联网</li>
+        <li>您始终对自己的数据拥有完全控制权</li>
+      </ul>
+
+      <h3>3.2 数据加密</h3>
+      <ul>
+        <li>
+          <strong>静态存储：</strong>
+          当数据存储在您的设备上时，会通过加密方式进行保护
+        </li>
+        <li>
+          <strong>传输过程：</strong>
+          您的设备与我们的服务器之间传输的数据，将通过业界标准加密协议（如
+          TLS/SSL）进行保护
+        </li>
+        <li>
+          <strong>云端同步：</strong>
+          当您开启云同步功能时，数据会在上传至服务器前进行加密处理
+        </li>
+      </ul>
+
+      <h3>3.3 安全措施</h3>
+      <p>我们采取多种安全措施来保护您的信息：</p>
+      <ul>
+        <li>安全的身份认证机制与密码哈希存储</li>
+        <li>定期进行安全审计与系统更新</li>
+        <li>访问控制与安全监控机制</li>
+        <li>遵循行业安全最佳实践</li>
+      </ul>
+
+      <h2>4. 信息共享与披露</h2>
+
+      <p>
+        <strong>我们不会将您的个人信息出售给任何第三方。</strong>
+      </p>
+
+      <h3>4.1 在以下情况下我们可能会共享信息</h3>
+      <ul>
+        <li>
+          <strong>团队协作：</strong>
+          您在团队空间中选择共享的内容，将对该团队的其他成员可见
+        </li>
+        <li>
+          <strong>服务提供商：</strong>
+          我们可能会使用受信任的第三方服务（如云存储、统计分析、基础设施服务），并与其签署严格的保密协议
+        </li>
+        <li>
+          <strong>法律要求：</strong>
+          在法律要求或为保护我们的合法权益、人身安全或财产安全时，我们可能会披露必要的信息
+        </li>
+        <li>
+          <strong>业务变更：</strong>
+          如发生合并、收购或资产转让，您的数据可能会作为资产的一部分被转移，我们会在合理范围内提前通知您
+        </li>
+      </ul>
+
+      <h2>5. 您的权利与选择</h2>
+
+      <p>针对您的数据，您享有以下权利：</p>
+      <ul>
+        <li><strong>访问权：</strong> 您可以随时在应用内访问自己的全部数据</li>
+        <li><strong>导出权：</strong> 您可以将自己的数据以标准格式导出</li>
+        <li>
+          <strong>删除权：</strong> 您可以删除账户以及与该账户关联的全部数据
+        </li>
+        <li><strong>更正权：</strong> 您可以在任何时候修改或更新自己的信息</li>
+        <li>
+          <strong>选择权：</strong> 您可以关闭云同步，仅在本地离线使用应用
+        </li>
+        <li>
+          <strong>数据可携权：</strong>
+          您可以请求获取一份可机器读取格式的数据副本
+        </li>
+      </ul>
+
+      <h2>6. 第三方服务</h2>
+
+      <p>青蛙目标可能会集成以下第三方服务：</p>
+      <ul>
+        <li>
+          <strong>云存储服务：</strong> 用于可选的数据云同步（例如
+          iCloud、CloudKit 等）
+        </li>
+        <li>
+          <strong>统计分析服务：</strong>
+          用于了解应用使用情况并改进性能（仅使用匿名化数据）
+        </li>
+        <li>
+          <strong>崩溃上报服务：</strong>
+          用于识别并修复错误（不包含可识别个人身份的信息）
+        </li>
+      </ul>
+      <p>
+        这些第三方服务均有各自的隐私政策，我们建议您同时阅读并了解相关条款。
+      </p>
+
+      <h2>7. 儿童隐私</h2>
+
+      <p>
+        青蛙目标适用于各年龄段用户。我们不会在明知的情况下，主动收集 13
+        周岁以下儿童的个人信息，除非已获得其监护人的同意。如您认为我们在未获监护人同意的情况下收集了相关信息，请及时与我们联系，我们将尽快予以删除。
+      </p>
+
+      <h2>8. 跨境数据传输</h2>
+
+      <p>
+        您的数据可能会在不同国家或地区进行处理和存储。我们将采取适当的安全措施，确保跨境传输的数据符合适用的数据保护法律（包括
+        GDPR、CCPA 等）的要求。
+      </p>
+
+      <h2>9. 数据保留期限</h2>
+
+      <ul>
+        <li>
+          <strong>活跃账户：</strong>
+          在您的账户处于活跃状态期间，我们会继续保留您的数据
+        </li>
+        <li>
+          <strong>已删除账户：</strong> 当您删除账户后，我们将在 30
+          天内永久删除您的数据
+        </li>
+        <li>
+          <strong>备份数据：</strong>
+          出于灾难恢复目的，备份数据可能会额外保留最长 90 天
+        </li>
+        <li>
+          <strong>法律合规：</strong>
+          某些数据如因法律法规要求，可能需要在更长时间内予以保留
+        </li>
+      </ul>
+
+      <h2>10. Cookie 与跟踪技术</h2>
+
+      <p>
+        青蛙目标是一款原生应用，本身不使用浏览器
+        Cookie。但我们可能会使用以下技术：
+      </p>
+      <ul>
+        <li><strong>本地存储：</strong> 用于保存您的偏好设置和应用配置</li>
+        <li><strong>统计标识符：</strong> 用于匿名统计应用使用情况</li>
+        <li><strong>会话令牌：</strong> 用于安全地维持您的登录状态</li>
+      </ul>
+
+      <h2>11. 本隐私政策的变更</h2>
+
+      <p>我们可能会不时更新本隐私政策。如发生重要变更，我们将：</p>
+      <ul>
+        <li>更新本政策顶部的“生效日期”</li>
+        <li>通过应用内通知或电子邮件等方式向您提示重大变更</li>
+        <li>在您继续使用青蛙目标的情况下，视为您接受更新后的隐私政策</li>
+      </ul>
+
+      <h2>12. 加州隐私权（CCPA）</h2>
+
+      <p>如果您是加利福尼亚州居民，您还享有以下额外权利：</p>
+      <ul>
+        <li>有权了解我们收集了哪些个人信息</li>
+        <li>有权请求删除您的个人信息</li>
+        <li>有权选择不允许出售个人信息（我们不会出售您的任何数据）</li>
+        <li>有权在行使隐私权时不受到歧视性待遇</li>
+      </ul>
+
+      <h2>13. 欧洲隐私权（GDPR）</h2>
+
+      <p>如果您位于欧洲经济区（EEA），根据 GDPR 您享有以下权利：</p>
+      <ul>
+        <li>访问您的个人数据的权利</li>
+        <li>更正不准确个人数据的权利</li>
+        <li>删除个人数据的权利（“被遗忘权”）</li>
+        <li>限制处理个人数据的权利</li>
+        <li>数据可携权</li>
+        <li>反对处理的权利</li>
+        <li>与自动化决策和画像相关的权利</li>
+      </ul>
+
+      <div class="contact">
+        <h2>14. 联系我们</h2>
+        <p>
+          如您对本隐私政策或您的个人数据有任何疑问、意见或请求，欢迎联系我们：
+        </p>
+        <ul>
+          <li><strong>应用名称：</strong> 青蛙目标</li>
+          <li><strong>电子邮箱：</strong> support@33344.top</li>
+          <li>
+            <strong>响应时间：</strong> 我们通常会在 48 小时内回复您的来信
+          </li>
+        </ul>
+        <p>
+          如您是为数据保护相关事宜或行使隐私权利与我们联系，请在邮件标题中注明“隐私请求”字样。
+        </p>
+      </div>
+
+      <hr
+        style="
+          margin: 40px 0;
+          border: none;
+          border-top: 1px solid var(--border-color);
+        "
+      />
+
+      <p
+        style="text-align: center; color: var(--muted-color); font-size: 0.9em"
+      >
+        感谢您信任青蛙目标，用它来承载您的目标与笔记。保护您的隐私是我们始终坚持的首要原则。🐸
+      </p>
+    </div>
+  </body>
+</html>
