@@ -23,7 +23,7 @@
         --warning-border: #e74c3c;
       }
 
-      body.darkmode {
+      :root.darkmode {
         --bg-color: #121212;
         --container-bg: #1e1e1e;
         --text-color: #e0e0e0;
@@ -120,9 +120,8 @@
           var params = new URLSearchParams(window.location.search);
           var dark = params.get("darkmode");
           if (dark && dark.toLowerCase() === "true") {
-            document.addEventListener("DOMContentLoaded", function () {
-              document.body.classList.add("darkmode");
-            });
+            // 直接在 :root(html) 上启用暗色模式，避免页面先亮后暗的闪烁
+            document.documentElement.classList.add("darkmode");
           }
         } catch (e) {
           // ignore
@@ -157,18 +156,12 @@
         <li>
           <strong>目标管理：</strong> 创建、跟踪和管理个人及团队目标的工具
         </li>
-        <li>
-          <strong>笔记记录：</strong> 基于 Markdown 的富文本笔记编辑功能
-        </li>
-        <li>
-          <strong>团队协作：</strong> 用于团队目标管理与协作的共享空间
-        </li>
+        <li><strong>笔记记录：</strong> 基于 Markdown 的富文本笔记编辑功能</li>
+        <li><strong>团队协作：</strong> 用于团队目标管理与协作的共享空间</li>
         <li>
           <strong>数据同步：</strong> 可选的云同步功能，让您在多设备间访问数据
         </li>
-        <li>
-          <strong>进度追踪：</strong> 进度可视化、勾选项与成就激励等功能
-        </li>
+        <li><strong>进度追踪：</strong> 进度可视化、勾选项与成就激励等功能</li>
       </ul>
 
       <h2>3. 用户账户</h2>
@@ -267,12 +260,8 @@
 
       <h3>7.1 免费与高级功能</h3>
       <ul>
-        <li>
-          <strong>免费版本：</strong> 向所有用户提供的基础功能
-        </li>
-        <li>
-          <strong>高级订阅：</strong> 通过应用内购买解锁的高级功能
-        </li>
+        <li><strong>免费版本：</strong> 向所有用户提供的基础功能</li>
+        <li><strong>高级订阅：</strong> 通过应用内购买解锁的高级功能</li>
       </ul>
 
       <h3>7.2 订阅条款</h3>
@@ -354,16 +343,13 @@
           <li>
             我们对因使用或无法使用本应用而产生的任何间接、附带、特殊、后果性或惩罚性损害不承担责任
           </li>
-          <li>
-            上述损害包括但不限于数据丢失、利润损失、收入损失或商机损失
-          </li>
+          <li>上述损害包括但不限于数据丢失、利润损失、收入损失或商机损失</li>
           <li>
             在任何情况下，我们对您承担的总责任不应超过您在过去 12
-            个月中因使用本服务实际支付给我们的费用总额（若法律允许，也可为 100 美元或等值金额中的更高者）
+            个月中因使用本服务实际支付给我们的费用总额（若法律允许，也可为 100
+            美元或等值金额中的更高者）
           </li>
-          <li>
-            即使我们已被告知可能发生此类损害，上述责任限制条款仍然适用
-          </li>
+          <li>即使我们已被告知可能发生此类损害，上述责任限制条款仍然适用</li>
         </ul>
       </div>
 
@@ -404,14 +390,14 @@
         <li>基于运营或技术原因修改或停止部分功能</li>
         <li>因不可预见的技术问题导致服务中断或故障</li>
       </ul>
-      <p>对于因服务中断或不可用而造成的损失，我们在法律允许范围内不承担责任。</p>
+      <p>
+        对于因服务中断或不可用而造成的损失，我们在法律允许范围内不承担责任。
+      </p>
 
       <h2>16. 终止</h2>
 
       <h3>16.1 您终止使用</h3>
-      <p>
-        您可以随时停止使用青蛙目标，并在应用设置中删除您的账户。
-      </p>
+      <p>您可以随时停止使用青蛙目标，并在应用设置中删除您的账户。</p>
 
       <h3>16.2 我们终止或限制</h3>
       <p>如出现以下情形，我们可能会暂停或终止您对青蛙目标的访问：</p>
@@ -427,9 +413,7 @@
         <li>在终止后，您使用本应用的权利将立即终止</li>
         <li>您可能无法继续访问或使用账户中的数据和内容</li>
         <li>我们建议您在终止前导出重要数据</li>
-        <li>
-          本条款中与责任限制、赔偿等相关的条款在终止后仍然有效
-        </li>
+        <li>本条款中与责任限制、赔偿等相关的条款在终止后仍然有效</li>
       </ul>
 
       <h2>17. 争议解决</h2>
@@ -495,9 +479,7 @@
 
       <div class="contact">
         <h2>25. 联系方式</h2>
-        <p>
-          如您对本服务条款有任何疑问、意见或建议，欢迎联系我们：
-        </p>
+        <p>如您对本服务条款有任何疑问、意见或建议，欢迎联系我们：</p>
         <ul>
           <li><strong>应用名称：</strong> 青蛙目标</li>
           <li><strong>电子邮箱：</strong> support@33344.top</li>
@@ -507,7 +489,13 @@
         </ul>
       </div>
 
-      <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--border-color)" />
+      <hr
+        style="
+          margin: 40px 0;
+          border: none;
+          border-top: 1px solid var(--border-color);
+        "
+      />
 
       <div class="highlight">
         <p style="text-align: center; margin-bottom: 0">
