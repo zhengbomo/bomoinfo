@@ -21,7 +21,7 @@
         --highlight-border: #27ae60;
       }
 
-      body.darkmode {
+      :root.darkmode {
         --bg-color: #121212;
         --container-bg: #1e1e1e;
         --text-color: #e0e0e0;
@@ -107,9 +107,8 @@
           var params = new URLSearchParams(window.location.search);
           var dark = params.get("darkmode");
           if (dark && dark.toLowerCase() === "true") {
-            document.addEventListener("DOMContentLoaded", function () {
-              document.body.classList.add("darkmode");
-            });
+            // 提前在 :root(html) 上设置暗色模式，避免先渲染浅色再切换导致闪烁
+            document.documentElement.classList.add("darkmode");
           }
         } catch (e) {
           // ignore
