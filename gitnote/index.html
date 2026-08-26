@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Git记 · 基于 Git 仓库的笔记应用</title>
+<meta name="description" content="Git记 —— 基于 Git 仓库的笔记应用。支持 GitHub/GitLab/Gitee 与自建仓库，SSH/HTTPS 连接，自动同步，FTS 全文检索，DIFF 视图，完善的 Markdown 编辑器，跨平台使用。Git 天生就适合笔记应用。" />
+<meta name="theme-color" content="#6F5CE4" />
+
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0a0c13;
+    --bg-soft: #0e1019;
+    --surface: #141726;
+    --surface-2: #1a1e30;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #eef0f7;
+    --text-muted: #9aa1b4;
+    --text-faint: #6b7184;
+    --accent: #6F5CE4;              /* 主题紫 */
+    --accent-bright: #8b7cf6;
+    --accent-light: #b6abff;        /* 高亮文字用浅紫 */
+    --accent-soft: rgba(111, 92, 228, 0.14);
+    --accent-glow: rgba(111, 92, 228, 0.45);
+    --accent-2: #2dd4bf;            /* 辅助青绿 */
+    --accent-2-soft: rgba(45, 212, 191, 0.14);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --maxw: 1120px;
+    --font-sans: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  /* 背景网格纹理 */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 80%);
+  }
+  .glow { position: fixed; z-index: -1; pointer-events: none; border-radius: 50%; filter: blur(120px); opacity: 0.5; }
+  .glow-1 { width: 520px; height: 520px; background: rgba(111,92,228,0.20); top: -160px; left: -120px; }
+  .glow-2 { width: 460px; height: 460px; background: rgba(45,212,191,0.13); top: 120px; right: -140px; }
+
+  .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ============ 导航 ============ */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10, 12, 19, 0.72);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; letter-spacing: 0.2px; }
+  .brand-icon {
+    width: 38px; height: 38px; border-radius: 10px; flex: none; display: block;
+    box-shadow: 0 6px 18px var(--accent-glow);
+  }
+  .brand small { display: block; font-size: 11px; font-weight: 500; color: var(--text-faint); letter-spacing: 0.4px; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-links a { padding: 8px 14px; border-radius: 8px; font-size: 14.5px; color: var(--text-muted); transition: color .15s, background .15s; }
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  .nav-cta {
+    margin-left: 8px; padding: 9px 18px; border-radius: 9px; font-weight: 600; font-size: 14.5px;
+    background: var(--accent); color: #fff; transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 6px 20px var(--accent-glow);
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-glow); }
+  .menu-btn { display: none; background: none; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 9px; cursor: pointer; font-size: 18px; }
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+    .nav-links.open {
+      display: flex; flex-direction: column; align-items: stretch; gap: 4px;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: rgba(10,12,19,0.98); border-bottom: 1px solid var(--border); padding: 12px 20px 20px;
+    }
+  }
+
+  /* ============ Hero ============ */
+  .hero { padding: 96px 0 80px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    background: var(--accent-soft); color: var(--accent-light); border: 1px solid rgba(111,92,228,0.30);
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .hero h1 { font-size: clamp(40px, 6vw, 64px); line-height: 1.08; font-weight: 900; letter-spacing: -1.5px; margin: 22px 0 8px; }
+  .hero h1 .accent { color: var(--accent-bright); }
+  .slogan { font-size: clamp(18px, 2.4vw, 24px); font-weight: 700; color: var(--accent-2); margin: 6px 0 20px; }
+  .hero p.lead { color: var(--text-muted); font-size: 17px; max-width: 520px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px;
+    border-radius: 11px; font-weight: 600; font-size: 15.5px; cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px var(--accent-glow); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px var(--accent-glow); }
+  .btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--border-strong); color: var(--text); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+  .hero-stats { display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-stats .stat b { display: block; font-size: 22px; font-weight: 800; }
+  .hero-stats .stat span { color: var(--text-faint); font-size: 13px; }
+
+  /* Hero 右侧 mockup */
+  .hero-visual { position: relative; }
+  .phone {
+    width: 300px; max-width: 78%; margin: 0 auto; aspect-ratio: 9 / 18.6;
+    border-radius: 40px; border: 1px solid var(--border-strong);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    box-shadow: 0 40px 90px rgba(0,0,0,0.55), 0 0 0 6px rgba(111,92,228,0.06), inset 0 1px 0 rgba(255,255,255,0.08);
+    padding: 14px; position: relative;
+  }
+  .phone .notch { width: 90px; height: 20px; background: #05070b; margin: 0 auto 16px; border-radius: 12px; }
+  .phone .screen { height: calc(100%); border-radius: 24px; overflow: hidden; background: #0d1117; }
+  .phone .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .float-card {
+    position: absolute; padding: 12px 16px; border-radius: 12px; font-size: 13px;
+    background: rgba(20,23,38,0.92); border: 1px solid var(--border-strong);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .float-card .ic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+  .float-1 { top: 14%; left: -6%; }
+  .float-2 { bottom: 16%; right: -8%; }
+  .float-1 .ic { background: var(--accent-soft); color: var(--accent-light); }
+  .float-2 .ic { background: var(--accent-2-soft); color: var(--accent-2); }
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero { padding: 60px 0 56px; }
+    .float-1 { left: 0; } .float-2 { right: 0; }
+  }
+
+  /* ============ 通用区块 ============ */
+  section { padding: 72px 0; }
+  .section-head { max-width: 640px; margin: 0 auto 48px; text-align: center; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-bright); }
+  .section-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.5px; margin: 10px 0 14px; }
+  .section-head p { color: var(--text-muted); font-size: 16.5px; }
+
+  /* ============ 数据私有 ============ */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pillar { background: linear-gradient(180deg, var(--surface), var(--bg-soft)); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+  .pillar .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px; }
+  .pillar h3 { font-size: 18px; margin-bottom: 10px; }
+  .pillar p { color: var(--text-muted); font-size: 14.5px; }
+  .p1 .ic { background: var(--accent-soft); color: var(--accent-light); }
+  .p2 .ic { background: var(--accent-2-soft); color: var(--accent-2); }
+  .p3 .ic { background: rgba(111,92,228,0.14); color: var(--accent-light); }
+  @media (max-width: 860px) { .pillars { grid-template-columns: 1fr; } }
+
+  /* ============ 功能特性 ============ */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feature {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px; transition: transform .18s, border-color .18s, background .18s; position: relative; overflow: hidden;
+  }
+  .feature:hover { transform: translateY(-4px); border-color: rgba(111,92,228,0.4); background: var(--surface-2); }
+  .feature .ic { width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 18px; color: var(--accent-bright); background: var(--accent-soft); }
+  .feature h3 { font-size: 17px; margin-bottom: 9px; }
+  .feature p { color: var(--text-muted); font-size: 14px; }
+  .feature .tag { position: absolute; top: 22px; right: 20px; font-size: 11px; font-weight: 600; color: var(--text-faint); background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 6px; }
+  @media (max-width: 960px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .features { grid-template-columns: 1fr; } }
+
+  .feature-highlight {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 24px;
+    background: linear-gradient(135deg, rgba(111,92,228,0.18), rgba(45,212,191,0.06));
+    border: 1px solid rgba(111,92,228,0.35);
+    border-radius: var(--radius); padding: 28px 30px;
+  }
+  .feature-highlight .ic { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; flex: none; color: var(--accent-light); background: var(--accent-soft); }
+  .feature-highlight .body { flex: 1; min-width: 0; }
+  .feature-highlight h3 { font-size: 19px; margin-bottom: 8px; }
+  .feature-highlight p { color: var(--text-muted); font-size: 14.5px; max-width: 640px; }
+  .feature-highlight .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .feature-highlight .pills span { font-size: 12.5px; font-weight: 600; color: var(--accent-light); background: var(--accent-soft); border: 1px solid rgba(111,92,228,0.25); padding: 4px 12px; border-radius: 999px; }
+  @media (max-width: 640px) {
+    .feature-highlight { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ============ 截图画廊（手机竖屏） ============ */
+  .gallery { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; align-items: start; }
+  .shot { text-align: center; transition: transform .18s; }
+  .shot:hover { transform: translateY(-6px); }
+  .shot .frame {
+    position: relative; aspect-ratio: 1284 / 2778; border-radius: 30px; overflow: hidden;
+    border: 1px solid var(--border-strong); background: #0d1117;
+    box-shadow: 0 26px 60px rgba(0,0,0,0.5);
+  }
+  .shot .frame::before {
+    content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 34%; height: 4px; border-radius: 99px; background: rgba(255,255,255,0.18); z-index: 2;
+  }
+  .shot .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .shot .meta { padding: 16px 4px 0; }
+  .shot .meta h4 { font-size: 16px; margin-bottom: 4px; }
+  .shot .meta p { color: var(--text-faint); font-size: 13px; }
+  .swipe-hint { display: none; text-align: center; color: var(--text-faint); font-size: 12.5px; margin-top: 6px; }
+
+  @media (max-width: 900px) {
+    .gallery {
+      display: flex; overflow-x: auto; gap: 22px; padding: 8px 8px 22px;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      margin: 0 -24px; padding-left: 24px; padding-right: 24px;
+    }
+    .gallery .shot { flex: 0 0 200px; scroll-snap-align: center; }
+    .gallery::-webkit-scrollbar { height: 6px; }
+    .gallery::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+  }
+  @media (hover: none) { .swipe-hint { display: block; } }
+
+  /* ============ 跨平台 ============ */
+  .platforms { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  .platform {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 30px 16px; text-align: center; transition: transform .18s, border-color .18s;
+  }
+  .platform:hover { transform: translateY(-4px); border-color: rgba(111,92,228,0.4); }
+  .platform .ic { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 14px; display: grid; place-items: center; background: var(--bg-soft); border: 1px solid var(--border); }
+  .platform h3 { font-size: 16px; margin-bottom: 4px; }
+  .platform span { color: var(--text-faint); font-size: 12.5px; }
+  .platform .soon {
+    display: inline-block; margin-top: 8px; font-size: 11.5px; font-weight: 600;
+    color: var(--accent-light); background: var(--accent-soft);
+    border: 1px solid rgba(111,92,228,0.3); padding: 2px 12px; border-radius: 999px;
+  }
+  @media (max-width: 960px) { .platforms { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .platforms { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ============ 多设备展示 ============ */
+  .devices { display: flex; align-items: flex-end; justify-content: center; gap: 30px; margin-top: 60px; }
+  .device { text-align: center; }
+  .device .screen { position: relative; overflow: hidden; background: #0d1117; border: 1px solid var(--border-strong); box-shadow: 0 26px 60px rgba(0,0,0,0.5); }
+  .device .screen img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top; }
+  .device .cap { margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--text); }
+  .device .cap small { display: block; color: var(--text-faint); font-size: 12px; font-weight: 400; margin-top: 2px; }
+
+  .device-mac { width: 55%; }
+  .device-mac .screen { border-radius: 14px; border: 0px }
+  .device-mac .topbar {
+    height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 14px;
+    background: var(--surface-2); border-bottom: 1px solid var(--border);
+  }
+  .device-mac .topbar .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .device-mac .topbar .d1 { background: #ff5f57; }
+  .device-mac .topbar .d2 { background: #febc2e; }
+  .device-mac .topbar .d3 { background: #28c840; }
+  .device-mac .topbar .addr {
+    margin-left: 10px; height: 20px; max-width: 230px; flex: 1; border-radius: 6px;
+    background: rgba(255,255,255,0.06); font-family: var(--font-mono); font-size: 11px;
+    line-height: 20px; color: var(--text-faint); padding: 0 10px; overflow: hidden; white-space: nowrap;
+  }
+  .device-mac .body { aspect-ratio: 3016 / 1972; overflow: hidden; }
+
+  .device-ipad { width: 27%; }
+  .device-ipad .screen { border-radius: 28px; background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
+  .device-ipad .inner { border-radius: 16px; overflow: hidden; aspect-ratio: 3 / 4; }
+
+  .device-phone { width: 16%; }
+  .device-phone .screen { border-radius: 26px; background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
+  .device-phone .screen::before {
+    content: ""; position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+    width: 34%; height: 4px; border-radius: 99px; background: rgba(255,255,255,0.18); z-index: 2;
+  }
+  .device-phone .inner { border-radius: 17px; overflow: hidden; aspect-ratio: 9 / 19; }
+
+  @media (max-width: 760px) {
+    .devices { flex-direction: column; align-items: center; gap: 36px; }
+    .device-mac, .device-ipad { width: 100%; max-width: 420px; }
+    .device-phone { width: 100%; max-width: 240px; }
+  }
+
+  /* ============ 下载 CTA ============ */
+  .cta {
+    text-align: center; padding: 80px 24px; border-radius: 24px;
+    background: linear-gradient(135deg, rgba(111,92,228,0.18), rgba(45,212,191,0.08));
+    border: 1px solid var(--border-strong); position: relative; overflow: hidden;
+  }
+  .cta h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 900; letter-spacing: -0.5px; }
+  .cta p { color: var(--text-muted); margin: 14px 0 32px; font-size: 17px; }
+  .cta .btns { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; }
+  .store-badge {
+    display: inline-flex; align-items: center; gap: 12px; height: 46px; padding: 0 20px;
+    background: #000; border: 1px solid var(--border-strong); border-radius: 11px;
+    transition: transform .15s, border-color .15s; color: #fff;
+  }
+  .store-badge:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .store-badge.badge-img { height: auto; padding: 0 6px; background: transparent; border: none; }
+  .store-badge.badge-img img { height: 44px; width: auto; display: block; }
+  .store-badge.badge-appgallery { gap: 10px; padding: 0 18px 0 10px; }
+  .store-badge.badge-appgallery img { width: 28px; height: 28px; }
+  .store-badge .t b { display: block; font-size: 14px; line-height: 1.2; }
+  .store-badge .t span { display: block; font-size: 10.5px; color: var(--text-faint); text-align: left; line-height: 1.2; letter-spacing: 0.3px; }
+  .qr { margin-top: 36px; display: inline-flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-faint); font-size: 13px; }
+  .qr .qr-box { width: 150px; height: 150px; border-radius: 16px; background: #fff; padding: 10px; box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+  .qr .qr-box img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* ============ Footer ============ */
+  footer { border-top: 1px solid var(--border); padding: 40px 0; color: var(--text-faint); font-size: 13.5px; }
+  .footer-inner { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+  .footer-links { display: flex; gap: 22px; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ============ 动效 ============ */
+  .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+<div class="bg-grid"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<!-- ============ 导航 ============ -->
+<header>
+  <div class="container nav">
+    <a class="brand" href="#top">
+      <img class="brand-icon" src="assets/icon-192.png" alt="Git记 图标" width="38" height="38" />
+      <span>Git记<small>GIT · NOTE</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#features">功能特性</a>
+      <a href="#screenshots">界面预览</a>
+      <a href="#platforms">跨平台</a>
+      <a href="#download">下载</a>
+      <a class="nav-cta" href="#download">立即下载</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>数据私有 · 完全掌控 · 永不锁死</span>
+        <h1>你的笔记，<br>归于<span class="accent">你自己</span>。</h1>
+        <div class="slogan">Git 天生就适合笔记应用</div>
+        <p class="lead">
+          <strong>Git记</strong> 是一款基于 Git 仓库的笔记应用。你的每一条笔记、每一张图片，
+          都以 Markdown + Git 的形式存在你自己的仓库里 —— 连接 GitHub / GitLab / Gitee，
+          或任何自建仓库，数据只属于你。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#download">立即下载</a>
+          <a class="btn btn-ghost" href="#features">了解功能 →</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>SSH / HTTPS</b><span>安全连接</span></div>
+          <div class="stat"><b>FTS</b><span>全文检索</span></div>
+          <div class="stat"><b>4 平台</b><span>iOS / macOS / Android / 鸿蒙</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="phone">
+          <div class="screen">
+            <img src="assets/screenshot-home.png" alt="Git记 笔记列表首页截图" fetchpriority="high" />
+          </div>
+        </div>
+        <div class="float-card float-1">
+          <span class="ic">🔒</span>
+          <span>SSH 加密连接<br><small style="color:var(--text-faint)">你的仓库你做主</small></span>
+        </div>
+        <div class="float-card float-2">
+          <span class="ic">⚡</span>
+          <span>自动同步<br><small style="color:var(--text-faint)">改完即推送</small></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 数据私有 ============ -->
+  <section id="privacy">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="kicker">Your Data, Your Rules</div>
+        <h2>不存别人服务器，数据只属于你</h2>
+        <p>没有私有云、没有订阅墙。Git记只是你与 Git 仓库之间的一座桥。</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar p1 reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l2 2 3.5-3.5"/></svg></div>
+          <h3>连接你的仓库</h3>
+          <p>通过 SSH / HTTPS 连接 GitHub、GitLab、Gitee 或任何自建 Git 服务，笔记直接读写你自己的仓库。</p>
+        </div>
+        <div class="pillar p2 reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/><path d="M9 9v11"/></svg></div>
+          <h3>完全掌控</h3>
+          <p>第三方便捷、自建更私密，随你选择。所有历史版本、分支、备份都掌握在你手里。</p>
+        </div>
+        <div class="pillar p3 reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
+          <h3>永不锁死</h3>
+          <p>笔记是纯 Markdown、图片是普通文件。随时导出、随时迁移、随时离开，没有任何枷锁。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 功能特性 ============ -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="kicker">Features</div>
+        <h2>为「记录」而生的完整能力</h2>
+        <p>从连接仓库到编辑、检索、同步、回溯，每一步都顺手。</p>
+      </div>
+      <div class="features">
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10"/><path d="M18 11c0 4-3 6-6 6"/><path d="M18 7c0-3-3-5-6-5"/></svg></div>
+          <h3>第三方 & 自建仓库</h3>
+          <p>支持 GitHub / GitLab / Gitee 等第三方平台，也支持你自己搭建的 Git 仓库。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/><circle cx="12" cy="15" r="1.6"/></svg></div>
+          <h3>SSH / HTTPS 连接</h3>
+          <p>用加密通道连接你的仓库，数据只属于你自己，不需要存到任何别人的服务器。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 11-2.34-5.66"/><path d="M20 4v4h-4"/><path d="M12 8v4l3 2"/></svg></div>
+          <h3>自动同步</h3>
+          <p>编辑完成即自动 commit &amp; push，多设备间的数据始终一致，无需手动操心。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="16" cy="17" r="3"/><path d="M8 10v4a3 3 0 003 3h2"/></svg></div>
+          <h3>冲突由你处理</h3>
+          <p>出现冲突文件时清晰展示差异，合并或保留由你决定，绝不悄悄覆盖。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></div>
+          <h3>FTS 全文检索</h3>
+          <p>内置全文检索，匹配更精准，笔记再多也能马上找到你要的那一条。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-4-4 4-3-3-3 3"/></svg></div>
+          <h3>图片随笔记入库</h3>
+          <p>粘贴的图片会跟着笔记一起存入 Git 仓库，引用永不断链，所见即所有。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3z"/><path d="M12 6v12"/><path d="M8 10h8M8 14h8"/></svg></div>
+          <h3>DIFF 视图</h3>
+          <p>每一次修改都以 diff 形式一目了然，改动、增删、历史版本清晰可见。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6"/><path d="M20 20V6"/><path d="M4 6h16"/><path d="M4 13h16"/></svg></div>
+          <h3>完善 Markdown 编辑器</h3>
+          <p>图片、图标、公式、表格一样不少，所见即所得的编辑体验，写起来停不下来。</p>
+        </div>
+        <div class="feature reveal">
+          <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="15" height="11" rx="2"/><path d="M21 8v8a2 2 0 01-2 2h-6"/><path d="M7 20h2"/></svg></div>
+          <h3>跨平台一起用</h3>
+          <p>iOS / macOS / Android / 鸿蒙 全覆盖，走到哪儿记到哪儿，数据无缝衔接。</p>
+        </div>
+        <div class="feature-highlight reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+          <div class="body">
+            <h3>纯原生实现，性能优先</h3>
+            <p>不使用 WebView 与跨平台运行时，iOS / macOS / Android / 鸿蒙 各自以平台原生技术构建。启动快、占用低，滚动与编辑始终顺滑流畅。</p>
+            <div class="pills">
+              <span>启动快</span><span>低内存占用</span><span>流畅滚动</span><span>无 WebView</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 界面预览 ============ -->
+  <section id="screenshots">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="kicker">Screenshots</div>
+        <h2>界面预览</h2>
+        <p>真实运行截图，先睹为快。</p>
+      </div>
+      <div class="gallery">
+        <div class="shot reveal">
+          <div class="frame"><img src="assets/screenshot-home.png" alt="笔记列表首页" width="1284" height="2778" loading="lazy" decoding="async" /></div>
+          <div class="meta"><h4>笔记列表 / 首页</h4><p>文件夹、笔记列表与搜索、同步状态。</p></div>
+        </div>
+        <div class="shot reveal">
+          <div class="frame"><img src="assets/screenshot-editor.png" alt="Markdown 编辑器" width="1284" height="2778" loading="lazy" decoding="async" /></div>
+          <div class="meta"><h4>Markdown 编辑器</h4><p>所见即所得，图片、公式、表格齐备。</p></div>
+        </div>
+        <div class="shot reveal">
+          <div class="frame"><img src="assets/screenshot-diff.png" alt="DIFF 视图" width="1284" height="2778" loading="lazy" decoding="async" /></div>
+          <div class="meta"><h4>DIFF 视图</h4><p>每次修改的增删，一目了然。</p></div>
+        </div>
+        <div class="shot reveal">
+          <div class="frame"><img src="assets/screenshot-search.png" alt="FTS 全文检索" width="1284" height="2778" loading="lazy" decoding="async" /></div>
+          <div class="meta"><h4>FTS 全文检索</h4><p>精准匹配，再多笔记也能马上找到。</p></div>
+        </div>
+        <div class="shot reveal">
+          <div class="frame"><img src="assets/screenshot-repo.png" alt="仓库同步设置" width="1284" height="2778" loading="lazy" decoding="async" /></div>
+          <div class="meta"><h4>仓库 / 同步设置</h4><p>连接 GitHub / GitLab / Gitee 或自建仓库。</p></div>
+        </div>
+      </div>
+      <div class="swipe-hint">← 左右滑动查看全部截图 →</div>
+    </div>
+  </section>
+
+  <!-- ============ 跨平台 ============ -->
+  <section id="platforms">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="kicker">Cross-Platform</div>
+        <h2>一个仓库，处处可用</h2>
+        <p>同一个 Git 仓库，在任何设备上打开，都是你最熟悉的笔记。</p>
+      </div>
+      <div class="platforms">
+        <div class="platform reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#ffffff"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg></div>
+          <h3>iOS</h3><span>iPhone / iPad</span>
+        </div>
+        <div class="platform reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#ffffff"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg></div>
+          <h3>macOS</h3><span>Apple 桌面端</span>
+        </div>
+        <div class="platform reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#34A853"><path d="M18.4395 5.5586c-.675 1.1664-1.352 2.3318-2.0274 3.498-.0366-.0155-.0742-.0286-.1113-.043-1.8249-.6957-3.484-.8-4.42-.787-1.8551.0185-3.3544.4643-4.2597.8203-.084-.1494-1.7526-3.021-2.0215-3.4864a1.1451 1.1451 0 0 0-.1406-.1914c-.3312-.364-.9054-.4859-1.379-.203-.475.282-.7136.9361-.3886 1.5019 1.9466 3.3696-.0966-.2158 1.9473 3.3593.0172.031-.4946.2642-1.3926 1.0177C2.8987 12.176.452 14.772 0 18.9902h24c-.119-1.1108-.3686-2.099-.7461-3.0683-.7438-1.9118-1.8435-3.2928-2.7402-4.1836a12.1048 12.1048 0 0 0-2.1309-1.6875c.6594-1.122 1.312-2.2559 1.9649-3.3848.2077-.3615.1886-.7956-.0079-1.1191a1.1001 1.1001 0 0 0-.8515-.5332c-.5225-.0536-.9392.3128-1.0488.5449zm-.0391 8.461c.3944.5926.324 1.3306-.1563 1.6503-.4799.3197-1.188.0985-1.582-.4941-.3944-.5927-.324-1.3307.1563-1.6504.4727-.315 1.1812-.1086 1.582.4941zM7.207 13.5273c.4803.3197.5506 1.0577.1563 1.6504-.394.5926-1.1038.8138-1.584.4941-.48-.3197-.5503-1.0577-.1563-1.6504.4008-.6021 1.1087-.8106 1.584-.4941z"/></svg></div>
+          <h3>Android</h3><span>手机 / 平板</span>
+        </div>
+        <div class="platform reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#ffffff"><path d="M1.861 0H3.59v3.548h3.861V0H9.19v8.883H7.458V5.136H3.59v3.746H1.858Zm8.248 8.883ZM13.854 0h1.706l2.809 4.7h.1L21.278 0h1.719v8.883h-1.719v-4.38l.1-1.489h-.1l-2.334 3.983h-1.039l-2.347-3.983h-.1l.1 1.489v4.38h-1.706Zm4.702 21.648a4.082 4.082 0 0 1-1.154-.161 3.417 3.417 0 0 1-1.01-.484 3.5 3.5 0 0 1-.8-.782 3.817 3.817 0 0 1-.538-1.092l1.666-.62a2.411 2.411 0 0 0 .643 1.116 1.683 1.683 0 0 0 1.207.434 2.173 2.173 0 0 0 .524-.062 1.749 1.749 0 0 0 .459-.2 1.02 1.02 0 0 0 .328-.335.88.88 0 0 0 .118-.459 1.052 1.052 0 0 0-.092-.447 1.031 1.031 0 0 0-.315-.373 2.538 2.538 0 0 0-.564-.335 8.135 8.135 0 0 0-.852-.335l-.577-.2a4.753 4.753 0 0 1-.774-.335 3.44 3.44 0 0 1-.7-.509 2.662 2.662 0 0 1-.525-.695 2.093 2.093 0 0 1-.2-.918 2.248 2.248 0 0 1 .21-.968 2.433 2.433 0 0 1 .616-.794 2.87 2.87 0 0 1 .957-.533 3.726 3.726 0 0 1 1.246-.2 3.57 3.57 0 0 1 1.22.186 2.783 2.783 0 0 1 .879.459 2.468 2.468 0 0 1 .59.608 2.9 2.9 0 0 1 .328.633l-1.56.62a1.55 1.55 0 0 0-.485-.67 1.387 1.387 0 0 0-.944-.3 1.655 1.655 0 0 0-.957.261.754.754 0 0 0-.38.658.843.843 0 0 0 .367.682 4.232 4.232 0 0 0 1.167.534l.59.186a6.271 6.271 0 0 1 1.023.434 2.948 2.948 0 0 1 .8.57 2.191 2.191 0 0 1 .511.769 2.44 2.44 0 0 1 .183.98 2.317 2.317 0 0 1-.3 1.2 2.559 2.559 0 0 1-.747.819 3.361 3.361 0 0 1-1.036.484 4.184 4.184 0 0 1-1.128.161Zm-13.028 0a4.441 4.441 0 0 1-3.23-1.34 4.757 4.757 0 0 1-.956-1.476 4.912 4.912 0 0 1-.339-1.824 4.813 4.813 0 0 1 .339-1.811 4.569 4.569 0 0 1 .956-1.477 4.38 4.38 0 0 1 1.427-.992 4.5 4.5 0 0 1 1.8-.36 4.417 4.417 0 0 1 1.79.36 4.343 4.343 0 0 1 1.44.992 4.418 4.418 0 0 1 .944 1.477 4.67 4.67 0 0 1 .351 1.811 4.765 4.765 0 0 1-.351 1.824 4.589 4.589 0 0 1-.944 1.476 4.495 4.495 0 0 1-3.23 1.34Zm0-1.588a2.822 2.822 0 0 0 1.125-.223 2.761 2.761 0 0 0 .92-.621 2.723 2.723 0 0 0 .617-.955 3.321 3.321 0 0 0 .23-1.253 3.227 3.227 0 0 0-.23-1.24 2.7 2.7 0 0 0-.617-.968 2.759 2.759 0 0 0-.92-.62 2.821 2.821 0 0 0-1.125-.223 2.856 2.856 0 0 0-2.057.844 2.946 2.946 0 0 0-.617.968 3.388 3.388 0 0 0-.218 1.24 3.488 3.488 0 0 0 .218 1.253 2.972 2.972 0 0 0 .617.955 2.856 2.856 0 0 0 2.057.843Zm4.972 1.389Zm-8.269 1.039h6.5V24h-6.5Z"/></svg></div>
+          <h3>鸿蒙 HarmonyOS</h3><span>华为生态</span>
+        </div>
+        <div class="platform reveal">
+          <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#0078D4"><path d="M0,0H11.377V11.372H0ZM12.623,0H24V11.372H12.623ZM0,12.623H11.377V24H0Zm12.623,0H24V24H12.623"/></svg></div>
+          <h3>Windows</h3><span class="soon">即将上线</span>
+        </div>
+      </div>
+      <div class="devices reveal">
+        <div class="device device-mac">
+          <div class="screen">
+            <div class="body"><img src="assets/mac_home_page.png" alt="Git记 macOS 桌面端截图" width="3016" height="1972" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="cap">macOS<small>桌面端</small></div>
+        </div>
+        <div class="device device-ipad">
+          <div class="screen"><div class="inner"><img src="assets/ipad-home.png" alt="Git记 iPad 截图" width="2064" height="2752" loading="lazy" decoding="async" /></div></div>
+          <div class="cap">iPad<small>平板端</small></div>
+        </div>
+        <div class="device device-phone">
+          <div class="screen"><div class="inner"><img src="assets/ohos_clone_page.png" alt="Git记 鸿蒙 HarmonyOS 截图" width="1280" height="2832" loading="lazy" decoding="async" /></div></div>
+          <div class="cap">鸿蒙 HarmonyOS<small>手机端</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 下载 CTA ============ -->
+  <section id="download">
+    <div class="container">
+      <div class="cta reveal">
+        <div class="kicker" style="margin-bottom:8px;">Get Git记</div>
+        <h2>现在开始，用 Git 记下一切</h2>
+        <p>下载 Git记，连接你的仓库，让每一笔记录都有迹可循。</p>
+        <div class="btns">
+          <a class="store-badge badge-img" href="https://apps.apple.com/app/id6779234441" aria-label="App Store 下载">
+            <img src="assets/badge-appstore.svg" alt="Download on the App Store" height="44" loading="lazy" decoding="async" />
+          </a>
+          <a class="store-badge badge-img" href="https://appgallery.huawei.com/app/detail?id=com.app.gitnote" aria-label="Google Play 下载">
+            <img src="assets/badge-googleplay.svg" alt="Get it on Google Play" height="44" loading="lazy" decoding="async" />
+          </a>
+          <a class="store-badge badge-appgallery" href="https://appgallery.huawei.com/app/detail?id=com.app.gitnote" aria-label="AppGallery 下载">
+            <img src="assets/badge-appgallery.svg" alt="" width="28" height="28" />
+            <span class="t"><span>EXPLORE IT ON</span><b>AppGallery</b></span>
+          </a>
+        </div>
+        <div class="qr">
+          <div class="qr-box"><img src="assets/qr-download.png" alt="扫码下载 Git记" width="518" height="514" loading="lazy" decoding="async" /></div>
+          <span>扫码下载</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Git记 · 基于 Git 仓库的笔记应用</div>
+    <div class="footer-links">
+      <a href="#features">功能特性</a>
+      <a href="#screenshots">界面预览</a>
+      <a href="#platforms">跨平台</a>
+      <a href="#download">下载</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var menuBtn = document.getElementById('menuBtn');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function () { navLinks.classList.toggle('open'); });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { navLinks.classList.remove('open'); });
+  });
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
