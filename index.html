@@ -1,128 +1,972 @@
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no"
-        />
-        <title>小两口的日记本</title>
-        <link
-            rel="stylesheet"
-            href="https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/portal/css/global.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/domain/stop-page/css/stop-page.css"
-        />
-        <style>
-          .center {
-            display: flex;
-            justify-content: center; /* 在主轴上居中 */
-            align-items: center; /* 在交叉轴上居中 */
-            width: 100vw; /* 设置宽度为视窗宽度 */
-          }
-        </style>
-    </head>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>广州三只八戒信息技术有限公司 - 小而美的App开发</title>
+    <style>
+      /* 基础样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    <body>
-        <div class="body">
-            <div class="stop-page">
-                <div class="sp-fir">
-                    <div class="sp-w sp-noaccess">
-                        <div class="spa-logo">
-                            <img
-                                src="https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/domain/stop-page/css/img/slice/Stop-page.svg"
-                                alt=""
-                            />
-                        </div>
-                        <div class="spa-text">
-                            <div class="spa-tit">小两口的日记本</div>
-                            <div class="spa-desc">
-                                这是一个日记网站
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sp-sec ">
-                    <div class="sp-w sp-if">
-                        <div class="if-common">
-                            <div class="ifc">
-                                <div class="ifc-tit">2019-11-03日本东京行</div>
-                                <div class="ifc-desc">
-                                    <p>
-                                    打成年以后，一直想去 日本 。只是年轻时，想的都是舍近求远：去最远的地方，看最不一样的世界。对于 日本 ，虽有向往，但总想着等年纪大了后，再来走访这位近邻。</p>
-                                    <p>一晃三年疫情，出国旅行的计划被一一搁置。今年告别疫情后，不知怎的心血来潮，打算先去霓虹走一走。</p>
+      body {
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+      }
 
-                                    <p>第一站： 东京</p>
-                                    <p>说实话，来 东京 之前，对这座城市并没有很高的期待。毕竟生活在广州 、深圳 这样的国际一线城市，想象中的 东京 应该也就那么回事儿。</p>
-                                    <p>但短短几天， 东京 已经改变了我对她的认知。</p>
-                                    <p>
-还记得大学时候看过《迷失 东京 》，讲的是两位素不相识的男女主人公在机缘巧合下于 东京 邂逅、相识的故事。二人不约而同的失眠、陪伴，最后又走向迷失。
-</p>
-<p>
-为何 东京 能让人迷失？如同樱花，绚烂而短暂。 东京 的美，并不张扬，却能打动人。就像英语中的那个词transient：稍纵即逝，无法停留。一切的美好都只在那一时。
-最符合这种transient气质的当属银座。 日本 人叫她Japan的香榭丽舍。但就如那些“东方 曼哈顿 ”、“小 巴黎 ”的代称一样，银座散发出来的气质，又怎会与 巴黎 的香榭丽舍、 曼哈顿 的第五大道一致？
-</p>
-<p>
-寸土寸金的繁华地段，游客如织，穿梭于摩登和时尚之中。但再多的满足和快乐，终究是短暂 - 物欲放纵后，更漫长的是贤者时刻。正如晚上10点后，走在二丁目，三丁目的街道，寂清而高冷。
-</p>
-<p>
-夜里的银座，游客三三两两。街上行色匆匆的或是刚加完班的白领，也有一些夜行者独自在街上游荡。二者的寂冷、孤独与白天的声色犬马、橱窗里那些莺莺燕燕的衣草皮靴，对比鲜明。
-都市男女，漂泊一族。所谓迷失，只是在一座城市寻找自己人生的方向。这种感觉就像地铁上，那些刻意回避眼神交流的 日本 人，他们把一切的情绪和思虑都只留给社恐的自己。
-</p>
-<p>
-除了银座， 东京 可以逛的地方很多。麻布十番、六本木是我比较喜欢的两个地方 - 前者潮流，后者高档。而想要欣赏城市全貌，roof of shibuya sky和六本木之丘都是好去处，记得提前预约。还有在Magnet by Shibuya俯瞰涩谷的十字路口，目睹千人同时过马路的壮观场面。
-第二天，我们一早先去浅草寺， 东京 都内历史最悠久的寺院。风雷神门下，这座观音寺是众多节 庆和祭祀的地方。紧接着可以打个车去明治神宫。巨木参天，茂密的树林隔断了外界喧嚣和嘈杂。
-</p>
-<p>
-在 日本 文化中，天皇就是神。而明治神宫之所以特别，是因为在明治时期， 日本 如何改革从一个落后的封建国家跻身国际列强。也正因为此， 日本 人对这位天皇有着崇高的敬意，进出神宫都会朝这位天皇鞠上一躬。
-</p>
-<p>
-除了祭祀，据说一年有1300对 日本 新人在此结婚，传统的仪式背后是体面和神圣。在周六当天我们也碰到几对新人，缓步前行，迈入人生新的篇章。
-</p>
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
 
-<p>
-看完浅草寺和明治神宫，下午可以去南青山走走，这附近的根津美术馆有不少佛教艺术。傍晚时分，到皇居边上，看着夕阳下山，别有一番味道。
-</p>
+      ul {
+        list-style: none;
+      }
 
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
 
+      .btn {
+        display: inline-block;
+        background-color: #ff6b6b;
+        color: white;
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
 
+      .btn:hover {
+        background-color: #ff5252;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 107, 107, 0.2);
+      }
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="if-slice"></div>
-                        <div style="justify-content: center;display: flex;align-items: center;">
-                            <p><a style="color: gray;" href="http://beian.miit.gov.cn">粤ICP备19099111号-1</a></p>
-                        </div>            
-                    </div>
-                </div>
-            </div>
+      section {
+        padding: 80px 0;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      p {
+        margin-bottom: 1.5rem;
+      }
+
+      /* 导航栏 */
+      header {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ff6b6b;
+      }
+
+      .logo span {
+        color: #333;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      .nav-links li {
+        margin-left: 30px;
+      }
+
+      .nav-links a {
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #ff6b6b;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-menu {
+        display: none;
+        cursor: pointer;
+      }
+
+      .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+
+      /* 英雄区 */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.7)
+          ),
+          url("https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
+        background-size: cover;
+        background-position: center;
+        margin-top: 60px;
+      }
+
+      .hero-content {
+        max-width: 650px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+
+      /* 关于我们 */
+      .about {
+        background-color: white;
+      }
+
+      .about-content {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+      }
+
+      .about-img {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-img img {
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      /* 服务 */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .service-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-icon {
+        font-size: 2.5rem;
+        color: #ff6b6b;
+        margin-bottom: 20px;
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+      }
+
+      /* 作品展示 */
+      .portfolio {
+        background-color: white;
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 50px;
+      }
+
+      .portfolio-item {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        aspect-ratio: 1;
+      }
+
+      .portfolio-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.5s ease;
+      }
+
+      .portfolio-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 107, 107, 0.8);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: all 0.5s ease;
+        padding: 20px;
+        color: white;
+        text-align: center;
+      }
+
+      .portfolio-item:hover .portfolio-overlay {
+        opacity: 1;
+      }
+
+      .portfolio-item:hover .portfolio-img {
+        transform: scale(1.1);
+      }
+
+      .portfolio-overlay h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      /* 团队 */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .team-member {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .member-img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+
+      .member-info {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .member-info h3 {
+        margin-bottom: 5px;
+      }
+
+      .member-info p {
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .social-links a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: #ff6b6b;
+        color: white;
+      }
+
+      /* 联系我们 */
+      .contact {
+        background-color: white;
+      }
+
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        margin-top: 50px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .form-control:focus {
+        border-color: #ff6b6b;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      /* 页脚 */
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 60px 0 30px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .footer-logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #ff6b6b;
+        margin-bottom: 20px;
+      }
+
+      .footer-links h3 {
+        position: relative;
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+      }
+
+      .footer-links h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #ff6b6b;
+      }
+
+      .footer-links ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links ul li a:hover {
+        color: #ff6b6b;
+      }
+
+      .footer-contact p {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .contact-icon {
+        margin-right: 10px;
+        color: #ff6b6b;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* 备案信息 */
+      .beian {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* 回到顶部按钮 */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ff6b6b;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        background-color: #ff5252;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 992px) {
+        h2 {
+          font-size: 2rem;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .about-content {
+          flex-direction: column;
+        }
+
+        .about-img,
+        .about-text {
+          flex: none;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          width: 100%;
+          height: calc(100vh - 70px);
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          background-color: white;
+          transition: all 0.5s ease;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          padding-top: 30px;
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 15px 0;
+        }
+
+        .mobile-menu {
+          display: block;
+        }
+
+        .mobile-menu.active .bar:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+
+        .mobile-menu.active .bar:nth-child(2) {
+          opacity: 0;
+        }
+
+        .mobile-menu.active .bar:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+
+        section {
+          padding: 60px 0;
+        }
+
+        .hero {
+          height: auto;
+          padding: 100px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 头部导航 -->
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">三只<span>八戒</span></div>
+          <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#services">服务</a></li>
+            <li><a href="#portfolio">作品展示</a></li>
+            <li><a href="#team">团队</a></li>
+            <li><a href="#contact">联系我们</a></li>
+          </ul>
+          <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- 英雄区 -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h1>小而美的App开发专家</h1>
+          <p>
+            广州三只八戒信息技术有限公司专注于提供高品质、用户友好的移动应用解决方案，为您的业务带来创新体验。
+          </p>
+          <a href="#contact" class="btn">联系我们</a>
         </div>
-        <script
-            id="sdi_js"
-            aid="2019103118575411963"
-            type="text/javascript"
-            src="//3gimg.qq.com/webapp_scan/sdi/common/sdi_js_full_v2.js"
-        ></script>
-        <script>
-            document.querySelectorAll("a").forEach(el => {
-                el.addEventListener("click", e => {
-                    try {
-                        let tag = e.currentTarget.dataset.sdi;
-                        let psArr = tag.split("-");
-                        let ptype = psArr[0];
-                        let stype = psArr[1];
-                        _sdi.stat({
-                            ptype: ptype,
-                            stype: stype
-                        });
-                    } catch (error) {}
-                });
+      </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="about" id="about">
+      <div class="container">
+        <h2>关于我们</h2>
+        <div class="about-content">
+          <div class="about-img">
+            <img
+              src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              alt="公司办公环境"
+            />
+          </div>
+          <div class="about-text">
+            <p>
+              广州三只八戒信息技术有限公司成立于2025年，是一家专注于移动应用开发的技术公司。我们的使命是打造"小而美"的应用产品，为用户带来简洁、高效、美观的使用体验。
+            </p>
+            <p>
+              我们的团队由一群充满激情的年轻人组成，他们拥有丰富的技术经验和创新思维。我们相信，优秀的产品不仅需要强大的技术支持，更需要对用户需求的深刻理解和对产品细节的极致追求。
+            </p>
+            <p>
+              虽然我们目前还没有正式上线的应用产品，但我们正在精心打磨多款应用，期待不久的将来与大家见面。同时，我们也提供定制化的应用开发服务，欢迎与我们洽谈合作。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 服务 -->
+    <section class="services" id="services">
+      <div class="container">
+        <h2>我们的服务</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">📱</div>
+            <h3>移动应用开发</h3>
+            <p>
+              提供iOS和Android平台的应用开发服务，从需求分析到上线运营的全流程支持。我们专注于打造小而美的应用，确保每一个细节都经过精心设计。
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎨</div>
+            <h3>UI/UX设计</h3>
+            <p>
+              专业的UI/UX设计团队，为您的应用打造美观且易用的界面，提升用户体验和满意度。我们注重每一个交互细节，让用户使用过程流畅自然。
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🔧</div>
+            <h3>技术咨询</h3>
+            <p>
+              为企业提供移动应用技术咨询服务，帮助您制定合适的技术方案，解决开发过程中遇到的各种技术难题。
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🚀</div>
+            <h3>产品运营</h3>
+            <p>
+              提供应用上线后的运营服务，包括用户数据分析、功能优化、内容更新等，持续提升应用的用户粘性和市场竞争力。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 作品展示 -->
+    <section class="portfolio" id="portfolio">
+      <div class="container">
+        <h2>作品展示</h2>
+        <p class="text-center">
+          以下是我们正在开发中的应用概念设计，敬请期待正式上线。
+        </p>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <img
+              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              alt="应用展示"
+              class="portfolio-img"
+            />
+            <div class="portfolio-overlay">
+              <h3>生活助手</h3>
+              <p>一款集待办事项、日程管理、笔记于一体的生活效率应用。</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img
+              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              alt="应用展示"
+              class="portfolio-img"
+            />
+            <div class="portfolio-overlay">
+              <h3>财务管理</h3>
+              <p>简洁直观的个人财务管理工具，帮助用户轻松掌控收支状况。</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img
+              src="https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              alt="应用展示"
+              class="portfolio-img"
+            />
+            <div class="portfolio-overlay">
+              <h3>健康追踪</h3>
+              <p>专注于个人健康数据记录与分析的应用，提供科学的健康建议。</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img
+              src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              alt="应用展示"
+              class="portfolio-img"
+            />
+            <div class="portfolio-overlay">
+              <h3>智能家居</h3>
+              <p>连接各种智能家居设备的控制中心，让生活更加智能化。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 团队 -->
+    <section class="team" id="team">
+      <div class="container">
+        <h2>我们的团队</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="团队成员"
+              class="member-img"
+            />
+            <div class="member-info">
+              <h3>张明</h3>
+              <p>创始人 & CEO</p>
+              <div class="social-links">
+                <a href="#"><span>W</span></a>
+                <a href="#"><span>Q</span></a>
+                <a href="#"><span>M</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="团队成员"
+              class="member-img"
+            />
+            <div class="member-info">
+              <h3>李芳</h3>
+              <p>产品经理</p>
+              <div class="social-links">
+                <a href="#"><span>W</span></a>
+                <a href="#"><span>Q</span></a>
+                <a href="#"><span>M</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="团队成员"
+              class="member-img"
+            />
+            <div class="member-info">
+              <h3>王强</h3>
+              <p>技术总监</p>
+              <div class="social-links">
+                <a href="#"><span>W</span></a>
+                <a href="#"><span>Q</span></a>
+                <a href="#"><span>M</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              alt="团队成员"
+              class="member-img"
+            />
+            <div class="member-info">
+              <h3>赵晓</h3>
+              <p>UI/UX设计师</p>
+              <div class="social-links">
+                <a href="#"><span>W</span></a>
+                <a href="#"><span>Q</span></a>
+                <a href="#"><span>M</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2>联系我们</h2>
+        <div class="contact-form">
+          <form id="contactForm">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="您的姓名"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="您的邮箱"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="主题" />
+            </div>
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                placeholder="您的留言"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn">发送留言</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-about">
+            <div class="footer-logo">三只<span>八戒</span></div>
+            <p>
+              广州三只八戒信息技术有限公司致力于打造小而美的应用体验，为用户提供简洁、高效、美观的移动应用解决方案。
+            </p>
+          </div>
+          <div class="footer-links">
+            <h3>快速链接</h3>
+            <ul>
+              <li><a href="#home">首页</a></li>
+              <li><a href="#about">关于我们</a></li>
+              <li><a href="#services">服务</a></li>
+              <li><a href="#portfolio">作品展示</a></li>
+              <li><a href="#team">团队</a></li>
+              <li><a href="#contact">联系我们</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>联系方式</h3>
+            <p>
+              <span class="contact-icon">📍</span>
+              广州市天河区汇彩路38号之一1001房B062
+            </p>
+            <p><span class="contact-icon">📱</span> 020-87687343</p>
+            <p><span class="contact-icon">✉️</span> jlptninja@hotmail.com</p>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; 2025 广州三只八戒信息技术有限公司 版权所有
+        </div>
+        <div class="beian">
+          <a href="https://beian.miit.gov.cn/" target="_blank">
+            粤ICP备19099111号-1</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top">↑</div>
+
+    <!-- JavaScript -->
+    <script>
+      // 移动端菜单切换
+      const mobileMenu = document.querySelector(".mobile-menu");
+      const navLinks = document.querySelector(".nav-links");
+
+      mobileMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      });
+
+      // 平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          if (navLinks.classList.contains("active")) {
+            mobileMenu.classList.remove("active");
+            navLinks.classList.remove("active");
+          }
+
+          const target = document.querySelector(this.getAttribute("href"));
+
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 70,
+              behavior: "smooth",
             });
-        </script>
-    </body>
+          }
+        });
+      });
+
+      // 回到顶部按钮
+      const backToTop = document.querySelector(".back-to-top");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTop.classList.add("visible");
+        } else {
+          backToTop.classList.remove("visible");
+        }
+      });
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // 表单提交处理
+      const contactForm = document.getElementById("contactForm");
+
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // 模拟表单提交
+        const formData = new FormData(contactForm);
+
+        // 显示提交成功信息
+        contactForm.innerHTML =
+          '<div style="text-align: center; padding: 50px 0;"><h3 style="margin-bottom: 20px; color: #ff6b6b;">留言已成功提交！</h3><p>感谢您的关注，我们会尽快回复您。</p></div>';
+      });
+
+      // 元素进入视口时的动画效果
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      // 添加动画类和观察元素
+      document.querySelectorAll("section").forEach((section) => {
+        section.classList.add("fade");
+        observer.observe(section);
+      });
+
+      // 添加CSS动画
+      const style = document.createElement("style");
+      style.textContent = `
+            .fade {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+
+            .fade.animate {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+      document.head.appendChild(style);
+    </script>
+  </body>
 </html>
-<!--[if !IE]>|xGv00|8f85bc5ee2a463e0e5c16c474a6dd271<![endif]-->
